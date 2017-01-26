@@ -1,0 +1,7 @@
+D:\EpamTasks\02-Generics\Generics.Test\bin\Debug\Generics.Test.dll
+D:\EpamTasks\02-Generics\Generics.Test\bin\Debug\Generics.Test.pdb
+D:\EpamTasks\02-Generics\Generics.Test\bin\Debug\Generics.dll
+D:\EpamTasks\02-Generics\Generics.Test\bin\Debug\Generics.pdb
+D:\EpamTasks\02-Generics\Generics.Test\obj\Debug\Generics.Test.csprojResolveAssemblyReference.cache
+D:\EpamTasks\02-Generics\Generics.Test\obj\Debug\Generics.Test.dll
+D:\EpamTasks\02-Generics\Generics.Test\obj\Debug\Generics.Test.pdb
