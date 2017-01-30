@@ -1,0 +1,7 @@
+D:\EpamTasks\04-Enumerable\EnumerableTest\bin\Debug\EnumerableTest.dll
+D:\EpamTasks\04-Enumerable\EnumerableTest\bin\Debug\EnumerableTest.pdb
+D:\EpamTasks\04-Enumerable\EnumerableTest\bin\Debug\Enumerable.dll
+D:\EpamTasks\04-Enumerable\EnumerableTest\bin\Debug\Enumerable.pdb
+D:\EpamTasks\04-Enumerable\EnumerableTest\obj\Debug\EnumerableTest.csprojResolveAssemblyReference.cache
+D:\EpamTasks\04-Enumerable\EnumerableTest\obj\Debug\EnumerableTest.dll
+D:\EpamTasks\04-Enumerable\EnumerableTest\obj\Debug\EnumerableTest.pdb

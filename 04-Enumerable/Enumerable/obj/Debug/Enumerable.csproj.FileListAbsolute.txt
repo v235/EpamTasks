@@ -1,0 +1,5 @@
+D:\EpamTasks\04-Enumerable\Enumerable\bin\Debug\Enumerable.dll
+D:\EpamTasks\04-Enumerable\Enumerable\bin\Debug\Enumerable.pdb
+D:\EpamTasks\04-Enumerable\Enumerable\obj\Debug\Enumerable.csprojResolveAssemblyReference.cache
+D:\EpamTasks\04-Enumerable\Enumerable\obj\Debug\Enumerable.dll
+D:\EpamTasks\04-Enumerable\Enumerable\obj\Debug\Enumerable.pdb

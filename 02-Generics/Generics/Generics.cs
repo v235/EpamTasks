@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace Task.Generics {
@@ -197,9 +199,40 @@ namespace Task.Generics {
 		///   The second attemp has the same workflow.
 		///   If the third attemp fails then this exception should be rethrow to the application.
 		/// </example>
-		public static T TimeoutSafeInvoke<T>(this Func<T> function) {
-			// TODO : Implement TimeoutSafeInvoke<T>
-			throw new NotImplementedException();
+        public static int count=0;
+		public static T TimeoutSafeInvoke<T>(this Func<T> function)
+		{
+            try
+            {
+                switch (count)
+                {
+                    case 0:
+                        return function();
+                    case 1:
+                        throw new WebException("The operation has timed out", WebExceptionStatus.Timeout);
+                    case 2:
+                        throw new WebException("The operation has timed out", WebExceptionStatus.Timeout);
+                }
+                return function();
+            }
+            catch (WebException ex)
+            {
+                Trace.WriteLine(ex.Status, "WebException");
+                count++;
+                switch (count)
+                {
+                    case 1:
+                        function.TimeoutSafeInvoke();
+                        break;
+                    case 2:
+                        return function();
+                    case 3:
+                        return function();
+                }
+               
+            }
+
+            return function();
 		}
 
 
@@ -227,6 +260,8 @@ namespace Task.Generics {
 		///       })
 		/// </example>
 		public static Predicate<T> CombinePredicates<T>(Predicate<T>[] predicates) {
+            Func<string> f1 = () => (new System.Net.WebClient()).DownloadString("http://www.google.com/");
+               string data = f1.TimeoutSafeInvoke();
 			// TODO : Implement CombinePredicates<T>
 			throw new NotImplementedException();
 		}
