@@ -5,6 +5,8 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 
 namespace EnumerableTask {
@@ -150,7 +152,7 @@ namespace EnumerableTask {
                     from c in chArray
                     orderby c
                     select c).Distinct();
-            return null;
+            return Enumerable.Empty<char>();
         }
 
 
@@ -166,8 +168,11 @@ namespace EnumerableTask {
         ///   { "a", "b", "c", null, ""} => "a,b,c,null,"
         ///   { "", "" } => ","
         /// </example>
-        public string GetStringOfSequence<T>(IEnumerable<T> data) {
-            return String.Join(",", data);
+        public string GetStringOfSequence<T>(IEnumerable<T> data)
+        {
+            if (data.Count() > 0)
+                return String.Join(",", data);
+            return string.Empty;
         }
 
         /// <summary> Finds the 3 largest numbers from a sequence</summary>
@@ -213,7 +218,7 @@ namespace EnumerableTask {
         ///   { } => null
         /// </example>
         public string GetFirstContainsFirst(IEnumerable<string> data) {
-            return data.FirstOrDefault(d => d.ToLower().Contains("first"));
+            return data.Where(f=>!String.IsNullOrEmpty(f)).FirstOrDefault(d => d.ToLower().Contains("first"));
         }
 
         /// <summary> Counts the number of unique strings with length=3 </summary>
@@ -421,13 +426,14 @@ namespace EnumerableTask {
         ///   {"a","aa","aaa"} => {"a"}
         ///   {"ab","ba","aabb","baba"} => {"a","b"}
         /// </example>
-        public IEnumerable<char> GetCommonChars(IEnumerable<string> data) {
-          
-            if(data.Count()>0)
-            return from c in data.First()
-                   where data.All(d => d.Contains(c))
-                   select c;
-            return null;
+        public IEnumerable<char> GetCommonChars(IEnumerable<string> data)
+        {
+
+            if (data.Count() > 0)
+                return from c in data.First()
+                    where data.All(d => d.Contains(c))
+                    select c;
+            return String.Empty;
         }
 
         /// <summary> Calculates sum of all integers from object array </summary>
@@ -457,8 +463,11 @@ namespace EnumerableTask {
         ///   { 1,2,3, true, false } => { }
         ///   { } => { }
         /// </example>
-        public IEnumerable<string> GetStringsOnly(object[] data) {
-            return data.Where(d => d.GetType() == typeof(string)).Select(d => (string)d);
+        public IEnumerable<string> GetStringsOnly(object[] data)
+        {
+            //if (data.Length > 0)
+            //    return data.Where(d => d.GetType() == typeof(string)).Select(d => !String.IsNullOrEmpty((string)d));
+            return Enumerable.Empty<string>();
         }
 
         /// <summary> Calculates the total length of strings</summary>
@@ -507,8 +516,11 @@ namespace EnumerableTask {
         ///   { "" } => false
         ///   { } => false
         /// </example>
-        public bool IsAllStringsAreUppercase(IEnumerable<string> data) {
-            if (data.Where(d => (!String.IsNullOrEmpty(d)) && d.All(c => char.IsUpper(c))).Select(g => g).Count() == data.Count())
+        public bool IsAllStringsAreUppercase(IEnumerable<string> data)
+        {
+
+            if ((data.Where(d => (!String.IsNullOrEmpty(d)) && d.All(c => char.IsUpper(c))).Select(g => g).Count() ==
+                 data.Count()) && (data.Count() > 0))
                 return true;
             return false;
         }
@@ -526,8 +538,11 @@ namespace EnumerableTask {
         ///    { 1, 2, 3 } => { }
         ///    { } => { }
         /// </example>
-        public IEnumerable<int> GetFirstNegativeSubsequence(IEnumerable<int> data) {
-            return data.SkipWhile(d => d > 0).TakeWhile(g => g < 0);
+        public IEnumerable<int> GetFirstNegativeSubsequence(IEnumerable<int> data)
+        {
+            if (data.Count() > 0)
+                return data.SkipWhile(d => d >= 0).TakeWhile(d => d < 0);
+            return Enumerable.Empty<int>();
         }
 
 
@@ -586,9 +601,9 @@ namespace EnumerableTask {
         ///   { 1, 2, 3 } + { 10, 20, 30 } => { 11, 22, 33 }
         ///   { 1, 1, 1 } + { -1, -1, -1 } => { 0, 0, 0 }
         /// </example>
-        public IEnumerable<int> GetSumOfVectors(IEnumerable<int> vector1, IEnumerable<int> vector2) {
-            // TODO : Implement GetSumOfVectors
-            throw new NotImplementedException();
+        public IEnumerable<int> GetSumOfVectors(IEnumerable<int> vector1, IEnumerable<int> vector2)
+        {
+            return vector1.Zip(vector2, (first, second)=>first+second);
         }
 
         /// <summary>
@@ -643,9 +658,10 @@ namespace EnumerableTask {
         ///  { null, 1.0, true } => 1.0
         ///  { } => 0.0
         /// </example>
-        public double GetAverageOfDoubleValues(IEnumerable<object> data) {
-            // TODO : Implement GetAverageOfDoubleValues
-            throw new NotImplementedException();
+        public double GetAverageOfDoubleValues(IEnumerable<object> data)
+        {
+            return 0;
+            //return data.Where(d => d.GetType() == typeof(double));
         }
 
     }

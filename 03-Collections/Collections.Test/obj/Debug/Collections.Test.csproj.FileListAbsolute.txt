@@ -1,0 +1,7 @@
+D:\EpamTasks\03-Collections\Collections.Test\bin\Debug\Collections.Test.dll
+D:\EpamTasks\03-Collections\Collections.Test\bin\Debug\Collections.Test.pdb
+D:\EpamTasks\03-Collections\Collections.Test\bin\Debug\Collections.dll
+D:\EpamTasks\03-Collections\Collections.Test\bin\Debug\Collections.pdb
+D:\EpamTasks\03-Collections\Collections.Test\obj\Debug\Collections.Test.csprojResolveAssemblyReference.cache
+D:\EpamTasks\03-Collections\Collections.Test\obj\Debug\Collections.Test.dll
+D:\EpamTasks\03-Collections\Collections.Test\obj\Debug\Collections.Test.pdb
