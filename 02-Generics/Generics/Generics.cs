@@ -106,42 +106,16 @@ namespace Task.Generics {
             where T2 : IComparable
             where T3 : IComparable
         {
-            if (sortedColumn >= array.Length)
+            if (sortedColumn > 3) throw new IndexOutOfRangeException();
+            var columns = new Func<Tuple<T1, T2, T3>, IComparable>[]
             {
-                throw new IndexOutOfRangeException("Индекс вне границ кортежа");
-            }
-            switch (sortedColumn)
-            {
-                case 0:
-                    if (ascending)
-                    {
-                        Array.Sort(array, (a, b) => a.Item1.CompareTo(b.Item1));
-                        break;
-
-                    }                   
-                    Array.Sort(array, (a, b) => b.Item1.CompareTo(a.Item1));
-                    break;
-                case 1:
-                    if (ascending)
-                    {
-                        Array.Sort(array, (a, b) => a.Item2.CompareTo(b.Item2));
-                        break;
-
-                    }   
-                    Array.Sort(array, (a, b) => b.Item2.CompareTo(a.Item2));
-                    break;
-                case 2:
-                    if (ascending)
-                    {
-                        Array.Sort(array, (a, b) => a.Item3.CompareTo(b.Item3));
-                        break;
-
-                    }   
-                    Array.Sort(array, (a, b) => b.Item3.CompareTo(a.Item3));
-                    break;
-            }
-        }
-
+                a => a.Item1,
+                a => a.Item2,
+                a => a.Item3
+            };
+            Array.Sort(array, (a, b) => columns[sortedColumn](a)
+                .CompareTo(columns[sortedColumn](b))*(ascending ? 1 : -1));
+        }       
     }
 
     /// <summary>

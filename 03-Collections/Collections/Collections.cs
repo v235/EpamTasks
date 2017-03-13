@@ -15,7 +15,8 @@ namespace Collections.Tasks {
     }
 
 
-    public class Task {
+    public class Task
+    {
 
         /// <summary> Generate the Fibonacci sequence f(x) = f(x-1)+f(x-2) </summary>
         /// <param name="count">the size of a required sequence</param>
@@ -31,7 +32,8 @@ namespace Collections.Tasks {
         /// </example>
         public static IEnumerable<int> GetFibonacciSequence(int count)
         {
-            if (count < 0) throw new ArgumentException("GetFibonacciSequence should throw ArgumentException if count is negative");
+            if (count < 0)
+                throw new ArgumentException("GetFibonacciSequence should throw ArgumentException if count is negative");
             int priv = 0;
             int cur = 1;
             for (int i = 1; i < count; i++)
@@ -57,10 +59,11 @@ namespace Collections.Tasks {
         ///  "TextReader is the abstract base class of StreamReader and StringReader, which ..." => 
         ///   {"TextReader","is","the","abstract","base","class","of","StreamReader","and","StringReader","which",...}
         /// </example>
-        public static IEnumerable<string> Tokenize(TextReader reader) {
-            if(reader==null)
+        public static IEnumerable<string> Tokenize(TextReader reader)
+        {
+            if (reader == null)
                 throw new ArgumentNullException("Reader Is Null");
-            char[] delimeters = new[] { ',', ' ', '.', '\t', '\n' };
+            char[] delimeters = new[] {',', ' ', '.', '\t', '\n'};
             string s = "";
             while ((s = reader.ReadLine()) != null)
             {
@@ -95,9 +98,26 @@ namespace Collections.Tasks {
         ///                   
         ///    result = { 1, 2, 3, 4, 5, 6, 7, 8 } 
         /// </example>
-        public static IEnumerable<T> DepthTraversalTree<T>(ITreeNode<T> root) {
-            // TODO : Implement the tree depth traversal algorithm
-            throw new NotImplementedException(); 
+        public static IEnumerable<T> DepthTraversalTree<T>(ITreeNode<T> root)
+        {
+            if (root == null)
+                throw new ArgumentNullException();
+
+            var elements = new Stack<ITreeNode<T>>();
+
+            elements.Push(root);
+
+            while (elements.Count > 0)
+            {
+                var currentElement = elements.Pop();
+                yield return currentElement.Data;
+
+                if (currentElement.Children == null) continue;
+                foreach (var child in currentElement.Children.Reverse().Where(child => child != null))
+                {
+                    elements.Push(child);
+                }
+            }
         }
 
         /// <summary>
@@ -121,9 +141,25 @@ namespace Collections.Tasks {
         ///                   
         ///    result = { 1, 2, 3, 4, 5, 6, 7, 8 } 
         /// </example>
-        public static IEnumerable<T> WidthTraversalTree<T>(ITreeNode<T> root) {
-            // TODO : Implement the tree width traversal algorithm
-            throw new NotImplementedException();
+        public static IEnumerable<T> WidthTraversalTree<T>(ITreeNode<T> root)
+        {
+            if (root == null)
+                throw new ArgumentNullException();
+
+            var nodes = new Queue<ITreeNode<T>>();
+            nodes.Enqueue(root);
+
+            while (nodes.Count > 0)
+            {
+                var currentNode = nodes.Dequeue();
+                yield return currentNode.Data;
+
+                if (currentNode.Children == null) continue;
+                foreach (var item in currentNode.Children)
+                {
+                    nodes.Enqueue(item);
+                }
+            }
         }
 
 
@@ -145,15 +181,45 @@ namespace Collections.Tasks {
         ///   source = { 1,2,3,4 }, count=4 => {{1,2,3,4}}
         ///   source = { 1,2,3,4 }, count=5 => ArgumentOutOfRangeException
         /// </example>
-        public static IEnumerable<T[]> GenerateAllPermutations<T>(T[] source, int count) {
-            // TODO : Implement GenerateAllPermutations method
-            throw new NotImplementedException();
+        public static IEnumerable<T[]> GenerateAllPermutations<T>(T[] source, int count)
+        {
+            if (count < 0) throw new ArgumentException();
+            if (count > source.Length) throw new ArgumentOutOfRangeException();
+
+            return PerPos(count, source.Length)
+                .Select(item => (item.Select(source.ElementAt).ToArray()));
         }
 
+        private static IEnumerable<int[]> PerPos(int count, int sourseCount)
+        {
+            var binaryNumber = (int) Math.Pow(2, sourseCount);
+            for (int i = 1; i < binaryNumber; i++)
+            {
+                var toReturn = new List<int>();
+                int digitNumber = 0;
+
+                for (int j = i; j != 0;)
+                {
+                    if ((j%2) == 1)
+                    {
+                        toReturn.Add(digitNumber);
+                        if (toReturn.Count > count)
+                            break;
+                    }
+                    j = j >> 1;
+                    digitNumber++;
+                }
+
+                if (toReturn.Count == count)
+                    yield return toReturn.ToArray();
+            }
+        }
     }
 
+}
+
     public static class DictionaryExtentions {
-        
+
         /// <summary>
         ///    Gets a value from the dictionary cache or build new value
         /// </summary>
@@ -172,10 +238,18 @@ namespace Collections.Tasks {
         ///   Person value = cache.GetOrBuildValue(10, ()=>LoadPersonById(10) );  // should return a loaded Person and put it into the cache
         ///   Person cached = cache.GetOrBuildValue(10, ()=>LoadPersonById(10) );  // should get a Person from the cache
         /// </example>
-        public static TValue GetOrBuildValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> builder) {
-            // TODO : Implement GetOrBuildValue method for cache
-            throw new NotImplementedException();
-        }
+        public static TValue GetOrBuildValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key,
+            Func<TValue> builder)
+        {
+            {
+                var value = default(TValue);
+                if (dictionary != null && !dictionary.TryGetValue(key, out value))
+                {
+                    value = builder();
+                    dictionary.Add(key, value);
+                }
+                return value;
+            }
 
+        }
     }
-}
