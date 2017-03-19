@@ -1,0 +1,9 @@
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\bin\Debug\LinqToXml.Test.dll
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\bin\Debug\LinqToXml.Test.pdb
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\bin\Debug\LinqToXml.dll
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\bin\Debug\LinqToXml.pdb
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\obj\Debug\LinqToXml.Test.csprojResolveAssemblyReference.cache
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\obj\Debug\LinqToXml.Test.LinqToXmlResources.resources
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\obj\Debug\LinqToXml.Test.csproj.GenerateResource.Cache
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\obj\Debug\LinqToXml.Test.dll
+D:\EpamTasks\05-LinqToXml\LinqToXml.Test\obj\Debug\LinqToXml.Test.pdb
