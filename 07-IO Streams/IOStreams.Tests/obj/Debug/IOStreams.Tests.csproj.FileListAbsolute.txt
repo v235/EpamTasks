@@ -1,0 +1,11 @@
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\bin\Debug\Resources\german_ISO-8859-1.txt
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\bin\Debug\Resources\Planets.xlsx
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\bin\Debug\Resources\Planets.xlsx.deflate
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\bin\Debug\Resources\Planets.xlsx.gzip
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\bin\Debug\IOStreams.Tests.dll
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\bin\Debug\IOStreams.Tests.pdb
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\bin\Debug\IOStreams.dll
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\bin\Debug\IOStreams.pdb
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\obj\Debug\IOStreams.Tests.csprojResolveAssemblyReference.cache
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\obj\Debug\IOStreams.Tests.dll
+D:\EpamTasks\07-IO Streams\IOStreams.Tests\obj\Debug\IOStreams.Tests.pdb
