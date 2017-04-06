@@ -1,0 +1,8 @@
+D:\EpamTasks\08-AsyncIO\AsyncIO.Tests\bin\Debug\AsyncIO.Tests.dll.config
+D:\EpamTasks\08-AsyncIO\AsyncIO.Tests\bin\Debug\AsyncIO.Tests.dll
+D:\EpamTasks\08-AsyncIO\AsyncIO.Tests\bin\Debug\AsyncIO.Tests.pdb
+D:\EpamTasks\08-AsyncIO\AsyncIO.Tests\bin\Debug\AsyncIO.dll
+D:\EpamTasks\08-AsyncIO\AsyncIO.Tests\bin\Debug\AsyncIO.pdb
+D:\EpamTasks\08-AsyncIO\AsyncIO.Tests\obj\Debug\AsyncIO.Tests.csprojResolveAssemblyReference.cache
+D:\EpamTasks\08-AsyncIO\AsyncIO.Tests\obj\Debug\AsyncIO.Tests.dll
+D:\EpamTasks\08-AsyncIO\AsyncIO.Tests\obj\Debug\AsyncIO.Tests.pdb
