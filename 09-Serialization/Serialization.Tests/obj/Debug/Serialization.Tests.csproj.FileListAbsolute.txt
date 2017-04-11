@@ -1,0 +1,9 @@
+D:\EpamTasks\09-Serialization\Serialization.Tests\bin\Debug\Resources\GoogleSearchJson.txt
+D:\EpamTasks\09-Serialization\Serialization.Tests\bin\Debug\Resources\CLR-ETW.man
+D:\EpamTasks\09-Serialization\Serialization.Tests\bin\Debug\Serialization.Tests.dll
+D:\EpamTasks\09-Serialization\Serialization.Tests\bin\Debug\Serialization.Tests.pdb
+D:\EpamTasks\09-Serialization\Serialization.Tests\bin\Debug\Serialization.Tasks.dll
+D:\EpamTasks\09-Serialization\Serialization.Tests\bin\Debug\Serialization.Tasks.pdb
+D:\EpamTasks\09-Serialization\Serialization.Tests\obj\Debug\Serialization.Tests.csprojResolveAssemblyReference.cache
+D:\EpamTasks\09-Serialization\Serialization.Tests\obj\Debug\Serialization.Tests.dll
+D:\EpamTasks\09-Serialization\Serialization.Tests\obj\Debug\Serialization.Tests.pdb

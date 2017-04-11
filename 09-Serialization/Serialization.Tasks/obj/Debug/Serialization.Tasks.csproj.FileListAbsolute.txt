@@ -1,0 +1,5 @@
+D:\EpamTasks\09-Serialization\Serialization.Tasks\bin\Debug\Serialization.Tasks.dll
+D:\EpamTasks\09-Serialization\Serialization.Tasks\bin\Debug\Serialization.Tasks.pdb
+D:\EpamTasks\09-Serialization\Serialization.Tasks\obj\Debug\Serialization.Tasks.csprojResolveAssemblyReference.cache
+D:\EpamTasks\09-Serialization\Serialization.Tasks\obj\Debug\Serialization.Tasks.dll
+D:\EpamTasks\09-Serialization\Serialization.Tasks\obj\Debug\Serialization.Tasks.pdb
