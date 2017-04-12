@@ -1,0 +1,7 @@
+D:\EpamTasks\10-Reflection\Reflection.Tests\bin\Debug\Reflection.dll
+D:\EpamTasks\10-Reflection\Reflection.Tests\bin\Debug\Reflection.pdb
+D:\EpamTasks\10-Reflection\Reflection.Tests\bin\Debug\Reflection.Tasks.dll
+D:\EpamTasks\10-Reflection\Reflection.Tests\bin\Debug\Reflection.Tasks.pdb
+D:\EpamTasks\10-Reflection\Reflection.Tests\obj\Debug\Reflection.Tests.csprojResolveAssemblyReference.cache
+D:\EpamTasks\10-Reflection\Reflection.Tests\obj\Debug\Reflection.dll
+D:\EpamTasks\10-Reflection\Reflection.Tests\obj\Debug\Reflection.pdb
