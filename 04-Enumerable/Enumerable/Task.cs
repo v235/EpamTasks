@@ -257,8 +257,9 @@ namespace EnumerableTask {
         ///   { } => { }
         /// </example>
         public int GetCountOfStringsWithMaxLength(IEnumerable<string> data)
-        {          
-            return data.Where(d => ((d == null) ? 0 : d.Length) == data.Max(p => (p == null) ? 0 : p.Length)).Count();            
+        {
+            var maxLength = data.DefaultIfEmpty().Max(v => !String.IsNullOrEmpty(v) ? v.Length : 0);
+            return data.Count(d => ((d == null) ? 0 : d.Length)==maxLength);            
         }
 
 
@@ -322,8 +323,9 @@ namespace EnumerableTask {
         ///    {(1/1/2010, 10)  , (2/2/2010, 10), (3/3/2010, 10) } => { 30, 0, 0, 0 }
         ///    {(1/1/2010, 10)  , (4/4/2010, 10), (10/10/2010, 10) } => { 10, 10, 0, 10 }
         /// </example>
-        public int[] GetQuarterSales(IEnumerable<Tuple<DateTime, int>> sales) {
-           
+        public int[] GetQuarterSales(IEnumerable<Tuple<DateTime, int>> sales)
+        {
+
             int[] sumOfQuarters = new int[4];
             sales.GroupBy(x => (x.Item1.Month - 1) / 3, (key, group) => sumOfQuarters[key] = group.Sum(y => y.Item2)).ToArray();           
             return sumOfQuarters;
@@ -357,7 +359,7 @@ namespace EnumerableTask {
         public IEnumerable<char> GetMissingDigits(IEnumerable<string> data)
         {
             string list = "0123456789";
-            return list.Except(data.SelectMany(d => d).Where(d => d >= '0' && d <= '9').Distinct());
+            return list.Except(data.SelectMany(d => d));
         }
 
 
@@ -409,8 +411,8 @@ namespace EnumerableTask {
         ///   {"ab","ba","aabb","baba"} => {"a","b"}
         /// </example>
         public IEnumerable<char> GetCommonChars(IEnumerable<string> data)
-        {
-            return data.Any() ? data.First().Where(c => data.All(d => d.Contains(c))):Enumerable.Empty<char>();
+        {          
+            return data.DefaultIfEmpty(Enumerable.Empty<char>()).Aggregate((a, b) => a.Intersect(b));
         }
 
         /// <summary> Calculates sum of all integers from object array </summary>
@@ -460,7 +462,7 @@ namespace EnumerableTask {
         ///   { } => 0
         /// </example>
         public int GetTotalStringsLength(IEnumerable<string> data) {
-            return data.Where(d => !String.IsNullOrEmpty(d)).Select(d => d.Length).Sum();            
+            return data.Where(d => !String.IsNullOrEmpty(d)).Sum(d => d.Length);            
         }
 
         /// <summary> Determines whether sequence has null elements</summary>
@@ -532,7 +534,7 @@ namespace EnumerableTask {
         /// </example>
         public bool AreNumericListsEqual(IEnumerable<int> integers, IEnumerable<double> doubles)
         {
-            return integers.Zip(doubles, (a, b) => (a == b)).All(p=>p);          
+            return doubles.SequenceEqual(integers.Select(x => (double)x));
         }
 
         /// <summary>
