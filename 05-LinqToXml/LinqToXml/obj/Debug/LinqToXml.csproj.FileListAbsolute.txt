@@ -1,5 +1,4 @@
 D:\EpamTasks\05-LinqToXml\LinqToXml\bin\Debug\LinqToXml.dll
 D:\EpamTasks\05-LinqToXml\LinqToXml\bin\Debug\LinqToXml.pdb
-D:\EpamTasks\05-LinqToXml\LinqToXml\obj\Debug\LinqToXml.csprojResolveAssemblyReference.cache
 D:\EpamTasks\05-LinqToXml\LinqToXml\obj\Debug\LinqToXml.dll
 D:\EpamTasks\05-LinqToXml\LinqToXml\obj\Debug\LinqToXml.pdb

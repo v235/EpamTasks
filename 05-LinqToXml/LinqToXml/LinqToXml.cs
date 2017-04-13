@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -17,15 +18,18 @@ namespace LinqToXml
         /// <returns>Xml representation (refer to CreateHierarchyResultFile.xml in Resources)</returns>
         public static string CreateHierarchy(string xmlRepresentation)
         {
-            var xmlSourse = XElement.Parse(xmlRepresentation);
-            var item = xmlSourse.Elements("Data").
-                GroupBy(element => element.Element("Category").Value).
-                Select(group => new XElement("Group", new XAttribute("ID", group.Key),
-                    group.Select(element => new XElement("Data",
-                        new XElement("Quantity", element.Element("Quantity").Value),
-                        new XElement("Price", element.Element("Price").Value)))));
-            xmlSourse.ReplaceAll(item);
-            return xmlSourse.ToString();
+            XElement xmlResult = new XElement("Root",
+                XElement.Parse(xmlRepresentation).Elements("Data").
+                    GroupBy(e => e.Element("Category").Value).
+                    Select(g =>
+                    {
+                        g.Elements("Category").Remove();
+                        return new XElement("Group",
+                            new XAttribute("ID", g.Key), g);
+                    })
+                );
+            return xmlResult.ToString();
+
         }
 
         /// <summary>
@@ -43,9 +47,9 @@ namespace LinqToXml
                 .Where(element =>
                     element
                         .Elements(nameSpace + "Address")
-                        .First(elem => elem.Attribute(nameSpace + "Type").Value == "Shipping")
+                        .First(elem => (string)elem.Attribute(nameSpace + "Type") == "Shipping")
                         .Element(nameSpace + "State").Value == "NY")
-                .Select(element => element.Attribute(nameSpace + "PurchaseOrderNumber").Value)
+                .Select(element => (string)element.Attribute(nameSpace + "PurchaseOrderNumber"))
                 .Aggregate((x, y) => x + "," + y);
         }
 
@@ -109,14 +113,9 @@ namespace LinqToXml
         /// <param name="xmlRepresentation">Xml representation with channels (refer to FindAllChannelsIdsSource.xml in Resources)</param>
         /// <returns>Sequence of channels ids</returns>
         public static IEnumerable<int> FindChannelsIds(string xmlRepresentation)
-        {           
-            return XDocument.Parse(xmlRepresentation)
-                .Element("service")
-                .Elements("channel")
-                .Where(c =>
-                    c.Elements("subscriber").Count() >= 2 &&
-                    c.DescendantNodes().OfType<XComment>().Any(comment => comment.Value == "DELETE"))
-                .Select(c => Convert.ToInt32(c.Attribute("id").Value));
+        {
+            return XElement.Parse(xmlRepresentation).Elements("channel").Where(e => e.Elements("subscriber").Count() >= 2 && 
+                e.DescendantNodes().OfType<XComment>().Any(comment => comment.Value == "DELETE")).Select(e=>(int)e.Attribute("id"));                     
         }
 
         /// <summary>
@@ -146,6 +145,7 @@ namespace LinqToXml
         {
             return xmlRepresentation.ToString(SaveOptions.DisableFormatting);
         }
+
         /// <summary>
         /// Gets total value of orders by calculating products value
         /// </summary>
@@ -153,11 +153,9 @@ namespace LinqToXml
         /// <returns>Total purchase value</returns>
         public static int GetOrdersValue(string xmlRepresentation)
         {
-            var xmlSourse = XElement.Parse(xmlRepresentation);
-            var prices = xmlSourse.Elements("products").
-                Elements().Select(product => product.Attribute("Value").Value);
-            return xmlSourse.Elements("Orders").
-                Elements("Order").Sum(order => Convert.ToInt32(prices.ElementAt(Convert.ToInt32(order.Element("product").Value) - 1)));
+            var xmlSourse = XElement.Parse(xmlRepresentation);   
+            return xmlSourse.Elements("Orders").Elements("Order").Elements("product").Join(xmlSourse.Elements("products").Elements(), o => (int)o, p => (int)p.Attribute("Id"),
+                (o, p) => new { Sum = (int)p.Attribute("Value")}).Sum(r =>r.Sum);                                              
         }
     }
 }

@@ -160,7 +160,8 @@ namespace LinqToXml.Test {
         ///  &lt;/Data&gt;
         ///  &lt;Data&gt;
         ///    &lt;Category&gt;B&lt;/Category&gt;
-        ///    &lt;Quantity&gt;10&lt;/Quantity&gt;        /// [rest of string was truncated]&quot;;.
+        ///    &lt;Quantity&gt;10&lt;/Quantity&gt;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CreateHierarchySourceFile {
             get {
