@@ -1,5 +1,4 @@
 D:\EpamTasks\07-IO Streams\IOStreams\bin\Debug\IOStreams.dll
 D:\EpamTasks\07-IO Streams\IOStreams\bin\Debug\IOStreams.pdb
-D:\EpamTasks\07-IO Streams\IOStreams\obj\Debug\IOStreams.csprojResolveAssemblyReference.cache
 D:\EpamTasks\07-IO Streams\IOStreams\obj\Debug\IOStreams.dll
 D:\EpamTasks\07-IO Streams\IOStreams\obj\Debug\IOStreams.pdb

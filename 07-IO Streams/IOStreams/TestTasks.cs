@@ -14,43 +14,60 @@ namespace IOStreams
 
 	public static class TestTasks
 	{
-	    /// <summary>
-	    /// Parses Resourses\Planets.xlsx file and returns the planet data: 
-	    ///   Jupiter     69911.00
-	    ///   Saturn      58232.00
-	    ///   Uranus      25362.00
-	    ///    ...
-	    /// See Resourses\Planets.xlsx for details
-	    /// </summary>
-	    /// <param name="xlsxFileName">source file name</param>
-	    /// <returns>sequence of PlanetInfo</returns>
+        /// <summary>
+        /// Parses Resourses\Planets.xlsx file and returns the planet data: 
+        ///   Jupiter     69911.00
+        ///   Saturn      58232.00
+        ///   Uranus      25362.00
+        ///    ...
+        /// See Resourses\Planets.xlsx for details
+        /// </summary>
+        /// <param name="xlsxFileName">source file name</param>
+        /// <returns>sequence of PlanetInfo</returns>
 	    public static IEnumerable<PlanetInfo> ReadPlanetInfoFromXlsx(string xlsxFileName)
 	    {
-	        using (var package = Package.Open(xlsxFileName))
+	        const string dictionarystringsPath = "/xl/sharedStrings.xml";
+	        const string worksheetPath = "/xl/worksheets/sheet1.xml";
+
+	        using (var package = Package.Open(xlsxFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
 	        {
-	            Uri planetsNameUri = new Uri("/xl/sharedStrings.xml", UriKind.Relative);
-	            Uri radiusesUri = new Uri("/xl/worksheets/sheet1.xml", UriKind.Relative);
+	            var xDocument = LoadXDocument(package, dictionarystringsPath);	            
+	            if (xDocument.Root == null)
+	                throw new NullReferenceException();
+                XNamespace ns = GetNamespace(xDocument);
+	            var strings = xDocument.Root.Descendants(ns + "t").Select(x => x.Value).ToList();
 
-	            XDocument docPlanets = XDocument.Load(
-                    package.GetPart(planetsNameUri).GetStream()
-	                );
-	            XDocument docRadiuses = XDocument.Load(
-                    package.GetPart(radiusesUri).GetStream()
-	                );
-	            XNamespace ns = docPlanets.Root.Name.Namespace;
-
-                return docRadiuses.Descendants(ns + "v").
-	                Where((element, index) => index%2 == 1).
-	                Skip(1).
-                    Zip(docPlanets.Descendants(ns + "t"),
-	                    (radius, planet) => new PlanetInfo
-	                    {
-	                        Name = planet.Value,
-	                        MeanRadius = Convert.ToDouble(radius.Value.Replace('.', ','))
-	                    }
-	                );
+	            xDocument = LoadXDocument(package, worksheetPath);
+	            ns = GetNamespace(xDocument);
+	            return xDocument.Descendants(ns + "row").Skip(1).Select(x =>
+	                new PlanetInfo
+	                {
+	                    Name = strings[(int) x.Descendants(ns + "v").First()],
+	                    MeanRadius = (double) x.Descendants(ns + "v").Skip(1).First()
+	                });
 	        }
 	    }
+
+	    private static XDocument LoadXDocument(Package package, string path)
+		{
+			using (var stream = GetPartStream(package, path))
+			{
+				var xDocument = XDocument.Load(stream);
+				return xDocument;
+			}
+		}
+
+		private static XNamespace GetNamespace(XDocument document)
+		{
+            if(document.Root==null)
+                throw new NullReferenceException();
+            return document.Root.Name.Namespace;
+		}
+
+		private static Stream GetPartStream(Package package, string path)
+		{
+			return package.GetPart(new Uri(path, UriKind.Relative)).GetStream();
+		}
 
 
 	    /// <summary>
