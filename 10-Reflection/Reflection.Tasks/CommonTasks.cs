@@ -43,8 +43,7 @@ namespace Reflection.Tasks
         /// <returns>property value of obj for required propertyPath</returns>
         public static T GetPropertyValue<T>(this object obj, string propertyPath)
         {
-            return (T) propertyPath.Split('.')
-                .Aggregate(obj, (val,prop ) => val.GetType().GetProperty(prop).GetValue(val,null));
+            return (T) aggregFunction(obj, propertyPath.Split('.'));
         }
 
 
@@ -69,13 +68,16 @@ namespace Reflection.Tasks
             var parts = propertyPath.Split('.');
             var targetPropName = parts.Last();
             parts = parts.Where(s => !s.Equals(targetPropName)).ToArray();
-            var targetPropParent = parts
-                .Aggregate(obj, (o, s) => o.GetType().GetProperty(s).GetValue(o, null));
+            var targetPropParent = aggregFunction(obj, parts);              
             var targetProp = targetPropParent.GetType().GetProperty(targetPropName);
             if (targetProp.GetSetMethod() == null)
                 targetProp = targetPropParent.GetType().BaseType.GetProperty(targetPropName);
             targetProp.SetValue(targetPropParent, value, null);
         }
 
+        public static object aggregFunction(object obj,IEnumerable<string> param)
+        {            
+            return param.Aggregate(obj, (val, prop) => val.GetType().GetProperty(prop).GetValue(val, null));
+        }
     }
 }

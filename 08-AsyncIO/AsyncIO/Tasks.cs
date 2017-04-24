@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -39,36 +41,37 @@ namespace AsyncIO
         /// <returns>The sequence of downloaded url content</returns>
         public static IEnumerable<string> GetUrlContentAsync(this IEnumerable<Uri> uris, int maxConcurrentStreams)
         {
-            var urisList = uris.ToList<Uri>();
+            //var urisList = uris.ToList<Uri>();
 
-            var curentTasks = urisList.Count() > maxConcurrentStreams
-                ? urisList
-                    .Take(maxConcurrentStreams)
-                    .Select(u => new WebClient()
-                        .DownloadStringTaskAsync(u)).ToList<Task<string>>()
-                : urisList
-                    .Select(u => new WebClient()
-                        .DownloadStringTaskAsync(u)).ToList<Task<string>>();
+            //var curentTasks = urisList.Count() > maxConcurrentStreams
+            //    ? urisList
+            //        .Take(maxConcurrentStreams)
+            //        .Select(u => new WebClient()
+            //            .DownloadStringTaskAsync(u)).ToList<Task<string>>()
+            //    : urisList
+            //        .Select(u => new WebClient()
+            //            .DownloadStringTaskAsync(u)).ToList<Task<string>>();
 
-            urisList.RemoveRange(0, urisList.Count());
+            //urisList.RemoveRange(0, urisList.Count());
 
-            while (curentTasks.Count() > 0)
-            {
-                var index = Task.WaitAny(curentTasks.First());
+            //while (curentTasks.Count() > 0)
+            //{
+            //    var index = Task.WaitAny(curentTasks.First());
 
-                yield return curentTasks.First().Result;
+            //    yield return curentTasks.First().Result;
 
-                curentTasks.RemoveAt(0);
+            //    curentTasks.RemoveAt(0);
 
-                if (urisList.Count() > 0)
-                {
-                    curentTasks.Add(new WebClient().DownloadStringTaskAsync(urisList[0]));
+            //    if (urisList.Count() > 0)
+            //    {
+            //        curentTasks.Add(new WebClient().DownloadStringTaskAsync(urisList[0]));
 
-                    urisList.RemoveAt(0);
-                }
-            }
+            //        urisList.RemoveAt(0);
+            //    }
+            //}
+            return Enumerable.Empty<string>();
         }
-           
+
 
         /// <summary>
         /// Calculates MD5 hash of required resource.
@@ -80,9 +83,10 @@ namespace AsyncIO
         /// <returns>MD5 hash</returns>
         public async static Task<string> GetMD5Async(this Uri resource)
         {
-            	return await new WebClient().DownloadDataTaskAsync(resource)
-				.ContinueWith(s => BitConverter.ToString(MD5.Create()
-                    .ComputeHash(s.Result)).Replace("-", string.Empty));
+                //return await new WebClient().DownloadDataTaskAsync(resource)
+                //.ContinueWith(s => BitConverter.ToString(MD5.Create()
+                //    .ComputeHash(s.Result)).Replace("-", string.Empty));
+            return null;
         }
 
     }

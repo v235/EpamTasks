@@ -1,5 +1,4 @@
 D:\EpamTasks\10-Reflection\Reflection.Tasks\bin\Debug\Reflection.Tasks.dll
 D:\EpamTasks\10-Reflection\Reflection.Tasks\bin\Debug\Reflection.Tasks.pdb
-D:\EpamTasks\10-Reflection\Reflection.Tasks\obj\Debug\Reflection.Tasks.csprojResolveAssemblyReference.cache
 D:\EpamTasks\10-Reflection\Reflection.Tasks\obj\Debug\Reflection.Tasks.dll
 D:\EpamTasks\10-Reflection\Reflection.Tasks\obj\Debug\Reflection.Tasks.pdb

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace AsyncIO.Tests
 {
+   
     [TestClass]
     public class Tests
     {
@@ -14,12 +15,10 @@ namespace AsyncIO.Tests
            "google", "msdn",  "facebook", "linkedin", "twitter",
            "bing",   "yahoo", "youtube",  "baidu",    "amazon"
         };
-
-
-        private IEnumerable<Uri> GetTestUris() {
+        private IEnumerable<Uri> GetTestUris()
+        {
             return sites.Select(x => new Uri(string.Format(@"http://{0}.com", x)));
         }
-
         [TestMethod]
         [TestCategory("GetUrlContent")]
         public void GetUrlContent_Should_Return_Content()
