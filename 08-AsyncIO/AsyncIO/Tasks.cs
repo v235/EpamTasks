@@ -40,36 +40,19 @@ namespace AsyncIO
         /// <param name="maxConcurrentStreams">Max count of concurrent request streams</param>
         /// <returns>The sequence of downloaded url content</returns>
         public static IEnumerable<string> GetUrlContentAsync(this IEnumerable<Uri> uris, int maxConcurrentStreams)
-        {
-            //var urisList = uris.ToList<Uri>();
-
-            //var curentTasks = urisList.Count() > maxConcurrentStreams
-            //    ? urisList
-            //        .Take(maxConcurrentStreams)
-            //        .Select(u => new WebClient()
-            //            .DownloadStringTaskAsync(u)).ToList<Task<string>>()
-            //    : urisList
-            //        .Select(u => new WebClient()
-            //            .DownloadStringTaskAsync(u)).ToList<Task<string>>();
-
-            //urisList.RemoveRange(0, urisList.Count());
-
-            //while (curentTasks.Count() > 0)
-            //{
-            //    var index = Task.WaitAny(curentTasks.First());
-
-            //    yield return curentTasks.First().Result;
-
-            //    curentTasks.RemoveAt(0);
-
-            //    if (urisList.Count() > 0)
-            //    {
-            //        curentTasks.Add(new WebClient().DownloadStringTaskAsync(urisList[0]));
-
-            //        urisList.RemoveAt(0);
-            //    }
-            //}
-            return Enumerable.Empty<string>();
+        {          
+            var getEnum = uris.GetEnumerator();
+            var uriTasks = new List<Task<string>>(uris.Take(maxConcurrentStreams)
+                .Select(x => new WebClient().DownloadStringTaskAsync(x)));          
+            while (uriTasks.Count > 0)
+            {
+                yield return uriTasks[0].Result;
+                uriTasks.RemoveAt(0);
+                if (getEnum.MoveNext())
+                {
+                    uriTasks.Add(new WebClient().DownloadStringTaskAsync(getEnum.Current));
+                }
+            }
         }
 
 
@@ -82,15 +65,27 @@ namespace AsyncIO
         /// <param name="resource">Uri of resource</param>
         /// <returns>MD5 hash</returns>
         public async static Task<string> GetMD5Async(this Uri resource)
+        {       
+			using (Stream stream = await new WebClient().OpenReadTaskAsync(resource))
+			{
+				return await HashFromStreamAsync(stream);
+			}
+		}
+
+        private static async Task<string> HashFromStreamAsync(Stream stream)
         {
-                //return await new WebClient().DownloadDataTaskAsync(resource)
-                //.ContinueWith(s => BitConverter.ToString(MD5.Create()
-                //    .ComputeHash(s.Result)).Replace("-", string.Empty));
-            return null;
+            MD5 md5 = MD5.Create();
+            byte[] streamBuffer = new byte[4096];
+            int bytes;
+
+            md5.Initialize();
+
+            while ((bytes = await stream.ReadAsync(streamBuffer, 0, 4096)) > 0)
+            {
+                md5.TransformBlock(streamBuffer, 0, bytes, null, 0);
+            }
+            md5.TransformFinalBlock(new byte[0], 0, 0);
+            return BitConverter.ToString(md5.Hash).Replace("-", string.Empty);
         }
-
     }
-
-
-
 }

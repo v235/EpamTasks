@@ -2,3 +2,4 @@ D:\EpamTasks\08-AsyncIO\AsyncIO\bin\Debug\AsyncIO.dll
 D:\EpamTasks\08-AsyncIO\AsyncIO\bin\Debug\AsyncIO.pdb
 D:\EpamTasks\08-AsyncIO\AsyncIO\obj\Debug\AsyncIO.dll
 D:\EpamTasks\08-AsyncIO\AsyncIO\obj\Debug\AsyncIO.pdb
+D:\EpamTasks\08-AsyncIO\AsyncIO\obj\Debug\AsyncIO.csprojResolveAssemblyReference.cache

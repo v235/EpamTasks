@@ -75,7 +75,7 @@ namespace Reflection.Tasks
             targetProp.SetValue(targetPropParent, value, null);
         }
 
-        public static object aggregFunction(object obj,IEnumerable<string> param)
+        private static object aggregFunction(object obj,IEnumerable<string> param)
         {            
             return param.Aggregate(obj, (val, prop) => val.GetType().GetProperty(prop).GetValue(val, null));
         }
